@@ -6,10 +6,15 @@ class AcGameMenu{
 
         // $ sign for the html obj
         this.$menu = $(`
-            <div class="">
+            <div class="ac-game-menu">
+                <div class="ac-game-field">
+                    <div class="ac-game-field-">
 
+                    </div>
+                </div>
             </div>
         `);
+        this.root.$ac_game.append(this.$menu);
 
     }
 }
