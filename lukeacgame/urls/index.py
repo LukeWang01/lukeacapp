@@ -7,8 +7,8 @@ urlpatterns=[
 
     path("", index, name="index"),
     path("menu/", include("lukeacgame.urls.menu.index")),
-    path("playground/", include("lukeacgame.urls.playground.index"),
-    path("settings/", include("lukeacgame.urls.settings.index"),
+    path("playground/", include("lukeacgame.urls.playground.index")),
+    path("settings/", include("lukeacgame.urls.settings.index")),
 
 ]
 
