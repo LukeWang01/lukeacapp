@@ -22,7 +22,7 @@ class AcGameMenu {
     </div>
 </div>
 `);
-        // this.$menu.hide();
+
         this.root.$ac_game.append(this.$menu);
         this.$single = this.$menu.find('.ac-game-field-item-single')
         this.$multi = this.$menu.find('.ac-game-field-item-multi')
@@ -39,11 +39,10 @@ class AcGameMenu {
         let outer = this;
         this.$single.click(function(){
             outer.hide();
-            outer.root.$playground.show("Single Mode");
+            outer.root.playground.show();
         });
         this.$multi.click(function (){
-            outer.hide();
-            outer.root.$playground.show("Multi Mode");
+            console.log("click multi");
         });
         this.$settings.click(function (){
             console.log("click settings");

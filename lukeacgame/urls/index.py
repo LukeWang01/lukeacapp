@@ -3,7 +3,7 @@ from django.urls import path, include
 from lukeacgame.views.index import index
 
 
-urlpatterns=[
+urlpatterns = [
 
     path("", index, name="index"),
     path("menu/", include("lukeacgame.urls.menu.index")),
