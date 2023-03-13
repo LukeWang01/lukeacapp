@@ -2,7 +2,7 @@ class AcGameMenu {
 
     // root is the obj let ac_game = new AcGame("ac_game_1");
     constructor(root) {
-        this.root = root
+        this.root = root;
 
         // $ sign for the html obj
         this.$menu = $(`
@@ -21,7 +21,8 @@ class AcGameMenu {
         </div>
     </div>
 </div>
-        `);
+`);
+        this.$menu.hide();
         this.root.$ac_game.append(this.$menu);
         this.$single = this.$menu.find('.ac-game-field-item-single')
         this.$multi = this.$menu.find('.ac-game-field-item-multi')
@@ -34,14 +35,15 @@ class AcGameMenu {
         this.add_listening_events();
     }
 
-    add_listening_events(){
+    add_listening_events() {
         let outer = this;
         this.$single.click(function(){
             outer.hide();
-            outer.root.playground.show();
+            outer.root.$playground.show("Single Mode");
         });
         this.$multi.click(function (){
-           console.log("click multi");
+            outer.hide();
+            outer.root.$playground.show("Multi Mode");
         });
         this.$settings.click(function (){
             console.log("click settings");
