@@ -34,7 +34,7 @@ class AcGameMenu {
         this.add_listening_events();
     }
 
-    add_listening_events() {
+    add_listening_events(){
         let outer = this;
         this.$single.click(function(){
             outer.hide();
