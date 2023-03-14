@@ -1,4 +1,4 @@
-class AcGame{
+export class AcGame{
 
     constructor(id) {
         this.id = id;
