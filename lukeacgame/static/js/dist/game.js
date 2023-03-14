@@ -8,21 +8,21 @@ class AcGameMenu {
         this.$menu = $(`
 <div class="ac-game-menu">
     <div class="ac-game-menu-field">
-        <div class="ac-game-field-item ac-game-field-item-single">
+        <div class="ac-game-menu-field-item ac-game-menu-field-item-single-mode">
             Single Player
         </div>
         <br>
-        <div class="ac-game-field-item ac-game-field-item-multi">
+        <div class="ac-game-menu-field-item ac-game-field-item-multi">
             Multi-Player
         </div>
         <br>
-        <div class="ac-game-field-item ac-game-field-item-settings">
+        <div class="ac-game-menu-field-item ac-game-field-item-settings">
             Settings
         </div>
     </div>
 </div>
 `);
-        this.$menu.hide();
+
         this.root.$ac_game.append(this.$menu);
         this.$single = this.$menu.find('.ac-game-field-item-single')
         this.$multi = this.$menu.find('.ac-game-field-item-multi')
@@ -39,11 +39,10 @@ class AcGameMenu {
         let outer = this;
         this.$single.click(function(){
             outer.hide();
-            outer.root.$playground.show("Single Mode");
+            outer.root.$playground.show();
         });
         this.$multi.click(function (){
-            outer.hide();
-            outer.root.$playground.show("Multi Mode");
+            console.log("click multi");
         });
         this.$settings.click(function (){
             console.log("click settings");
@@ -58,15 +57,12 @@ class AcGameMenu {
         this.$menu.hide();
     }
 
-}class AcGamePlayground {
+}
+class AcGamePlayground {
 
     constructor(root) {
         this.root = root;
-        this.$playground = $(`
-<div>
-Playground
-</div>
-        `);
+        this.$playground = $(`<div>Playground</div>`);
         this.hide();
         this.root.$ac_game.append(this.$playground);
         this.start();
