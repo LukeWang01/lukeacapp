@@ -8,9 +8,11 @@ class Player extends AcGameObject {
         this.ctx = this.playground.game_map.ctx;
 
         this.x = x;
-        this.vx = 1;
+        this.vx = 0;
         this.y = y;
-        this.vy = 1;
+        this.vy = 0;
+        
+        this.move_length = 0;
 
         this.radius = radius;
         this.color = color;
@@ -18,17 +20,83 @@ class Player extends AcGameObject {
         this.is_me = is_me;
         this.eps = 0.1;
         
+        this.current_skill = null;
 
     }
 
     start() {
-
+        if (this.is_me){
+            this.add_listening_events();
+        }
 
     }
 
+    add_listening_events(){
+
+        let outer = this;   // save this as outer
+
+        this.playground.game_map.$canvas.on("contextmenu", function(){
+            return false;
+        });
+    
+        this.playground.game_map.$canvas.mousedown(function(e) {
+            if (e.which === 3) {    // 3 is the right click, 1 is left click, 2 is mid click
+                // access this class function via outer, otherwise
+                outer.move_to(e.clientX, e.clientY);
+            }else if (e.which === 1) {
+                console.log("mouse click");
+                if (outer.current_skill === "fireball") {
+                    outer.attack_fireball(e.clientX, e.clientY);
+                }
+            }
+        });
+
+        $(window).keydown(function(e){
+            if (e.which === 81) {   // q key pressed
+                outer.current_skill = "fireball";
+                return false;
+            }
+
+        });
+    
+    }
+
+    attack_fireball(to_x, to_y) {
+        console.log("fire ball", to_x, to_y);
+    }
+
+    move_to(to_x, to_y){
+        
+        this.move_length = this.get_dist(this.x, this.y, to_x, to_y);
+        let angle = Math.atan2(to_y - this.y, to_x - this.x);
+        this.vx = Math.cos(angle);
+        this.vy = Math.sin(angle);
+
+    }
+
+    get_dist(x1, x2, y1, y2){
+
+        let dx = x1 - x2;
+        let dy = y1 - y2;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+
+
     update(){
-        this.x += this.vx;
-        this.y += this.vy;
+        if (this.move_length < this.eps){
+
+            this.move_length = 0;
+            this.vx = this.vy = 0;
+        }else{
+            let moved = Math.min(this.move_length, this.speed * this.time_delta / 1000);
+            
+            this.x += this.vx * moved;
+            this.y += this.vy * moved;
+            this.move_length -= moved;
+
+        }
+        
         this.render();
 
     }
