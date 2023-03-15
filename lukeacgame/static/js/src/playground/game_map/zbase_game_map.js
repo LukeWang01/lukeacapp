@@ -1,4 +1,4 @@
-class  GameMap extends AC_GAME_OBJECTS{
+class  GameMap extends AcGameObject{
 
     constructor(playground) {
         super();
@@ -21,7 +21,7 @@ class  GameMap extends AC_GAME_OBJECTS{
 
     render() {
         this.ctx.fillStyle = "rgba(0,0,0)";
-        this.ctx.fillRect(0,0, this.ctx.canvas.width, this,ctx.canvas.height);
+        this.ctx.fillRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
 
     }
 

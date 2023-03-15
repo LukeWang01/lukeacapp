@@ -3,9 +3,7 @@ class AcGamePlayground {
     constructor(root) {
         this.root = root;
         this.$playground = $(`
-<div class="ac-game-playground">
-    Playground
-</div>
+<div class="ac-game-playground"></div>
 
 
 `);
