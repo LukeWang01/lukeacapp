@@ -203,6 +203,8 @@ class Player extends AcGameObject {
                 if (outer.current_skill === "fireball") {
                     outer.attack_fireball(e.clientX, e.clientY);
                 }
+
+                outer.current_skill = null;
             }
         });
 
@@ -217,7 +219,19 @@ class Player extends AcGameObject {
     }
 
     attack_fireball(to_x, to_y) {
-        console.log("fire ball", to_x, to_y);
+        let x = this.x;
+        let y = this.y;
+        let radius = this.playground.height * 0.01;
+        let angle = Math.atan2(to_y - y, to_x - x);
+        let vx = Math.cos(angle);
+        let vy = Math.sin(angle);
+        let color = "orange";
+        let speed = this.playground.height * 0.5;
+        let move_length = this.playground.height * 1;
+        
+        new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length);
+
+
     }
 
     move_to(to_x, to_y){
@@ -284,6 +298,8 @@ class FireBall extends AcGameObject {
         this.move_length = move_length;
         this.eps = 0.1;
 
+        this.ctx = this.playground.game_map.ctx;
+
     }
     
     start() {
@@ -336,6 +352,9 @@ class AcGamePlayground {
         this.players = [];
         this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "white", this.height * 0.15, true));
 
+        for (let i = 0; i < 5; i ++){
+            this.players.push(new Player(this, this.width / 2, this.height / 2, this.height * 0.05, "blue", this.height * 0.15, false));
+        }
 
         this.start();
     }

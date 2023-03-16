@@ -15,6 +15,8 @@ class FireBall extends AcGameObject {
         this.move_length = move_length;
         this.eps = 0.1;
 
+        this.ctx = this.playground.game_map.ctx;
+
     }
     
     start() {
