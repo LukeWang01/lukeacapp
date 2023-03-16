@@ -55,7 +55,7 @@ class FireBall extends AcGameObject {
     is_collision(player) {
         let distance = this.get_dist(this.x, this.y, player.x, player.y)
         if (distance < this.radius + player.radius) {
-            console.log("collision true");
+            //console.log("collision true");
             return true;
         }
         return false;
@@ -64,7 +64,7 @@ class FireBall extends AcGameObject {
     attack(player) {
         let angle = Math.atan2(player.y - this.y, player.x - this.x);
         player.is_attacked(angle, this.damage);
-        console.log("attack player", angle, this.damage);
+        //console.log("attack player", angle, this.damage);
         this.destroy();
 
     }

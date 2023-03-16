@@ -86,18 +86,18 @@ class Player extends AcGameObject {
     }
 
     is_attacked(angle, damage) {
-        console.log("player is attacked");
+        //console.log("player is attacked");
         this.radius -= damage;
-        console.log("player radius", this.radius);
-        console.log("damage", damage);
+        //console.log("player radius", this.radius);
+        //console.log("damage", damage);
         if (this.radius < 10) {
-            console.log("des");
+            //console.log("des");
             this.destroy();
             return false;
         }
         this.damge_x = Math.cos(angle);
         this.damage_y = Math.sin(angle);
-        this.damage_speed = damage;
+        this.damage_speed = damage * 50;
 
     }
 
@@ -119,12 +119,13 @@ class Player extends AcGameObject {
 
 
     update() {
-        if (this.damage_speed > this.eps) {
+        if (this.damage_speed > this.eps * 100) {
             this.vx = this.vy = 0;
             this.move_length = 0;
             this.x += this.damage_x * this.damage_speed * this.time_delta / 1000;
-            this.y += this.damage_y * this.damage_spped * this.time_delta / 1000;
+            this.y += this.damage_y * this.damage_speed * this.time_delta / 1000;
             this.damage_speed *= this.friction;
+            console.log("damage move x and y", this.x, this.y, this.damage_speed);
         } else {
 
             if (this.move_length < this.eps){
