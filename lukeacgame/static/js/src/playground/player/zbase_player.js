@@ -88,6 +88,21 @@ class Player extends AcGameObject {
     }
 
     is_attacked(angle, damage) {
+
+        for (let i = 0; i < 10 + Math.random() * 20; i ++) { // between 10 - 15
+            let x = this.x;
+            let y = this.y;
+            let radius = this.radius * Math.random() * 0.2;
+            let angle = Math.PI * 2 * Math.random();    // directions should be random
+            let vx = Math.cos(angle);
+            let vy = Math.sin(angle);
+            let color = this.color;
+            let speed = this.speed * 10;
+            let move_length = this.radius * Math.random() * 5;
+            new Particle(this.playground, x, y, radius, vx, vy, color, speed, move_length);
+        }
+
+        
         //console.log("player is attacked");
         this.radius -= damage;
         //console.log("player radius", this.radius);
@@ -102,18 +117,7 @@ class Player extends AcGameObject {
         this.damage_speed = damage * 50;
 
         // release particles:
-        for (let i = 0; i < 10 + Math.random() * 20; i ++) { // between 10 - 15
-            let x = this.x;
-            let y = this.y;
-            let radius = this.radius * Math.random() * 0.2;
-            let angle = Math.PI * 2 * Math.random();    // directions should be random
-            let vx = Math.cos(angle);
-            let vy = Math.sin(angle);
-            let color = this.color;
-            let speed = this.speed * 10;
-            let move_length = this.radius * Math.random() * 5;
-            new Particle(this.playground, x, y, radius, vx, vy, color, speed, move_length);
-        }
+        
 
     }
 
