@@ -27,6 +27,8 @@ class Player extends AcGameObject {
         
         this.current_skill = null;
 
+        this.spent_time = 0;
+
     }
 
     start() {
@@ -99,6 +101,20 @@ class Player extends AcGameObject {
         this.damage_y = Math.sin(angle);
         this.damage_speed = damage * 50;
 
+        // release particles:
+        for (let i = 0; i < 10 + Math.random() * 20; i ++) { // between 10 - 15
+            let x = this.x;
+            let y = this.y;
+            let radius = this.radius * Math.random() * 0.2;
+            let angle = Math.PI * 2 * Math.random();    // directions should be random
+            let vx = Math.cos(angle);
+            let vy = Math.sin(angle);
+            let color = this.color;
+            let speed = this.speed * 10;
+            let move_length = this.radius * Math.random() * 5;
+            new Particle(this.playground, x, y, radius, vx, vy, color, speed, move_length);
+        }
+
     }
 
 
@@ -119,6 +135,26 @@ class Player extends AcGameObject {
 
 
     update() {
+        this.spent_time += this.time_delta / 1000;
+
+        if (Math.random() < 1 / 300.0 && this.spent_time > 5 && !this.is_me) {
+            // attack random players:
+            // let player_0 = this.playground.players[math.random() * this.playground.players.length]
+            
+            // attack player:
+            let player_0 = this.playground.players[0];
+            //let x = player_0.x;
+            //let y = player_0.y;
+
+            // add pre-calculate location:
+            let x = player_0.x + player_0.speed * this.vx * this.time_delta / 1000 * 0.5;
+            let y = player_0.y + player_0.speed * this.vy * this.time_delta / 1000 * 0.5;
+
+            this.attack_shoot_fireball(x, y);
+
+        }
+
+
         if (this.damage_speed > this.eps * 100) {
             this.vx = this.vy = 0;
             this.move_length = 0;
@@ -154,5 +190,12 @@ class Player extends AcGameObject {
         this.ctx.fill();
     }
 
+    on_destroy() {
+        for (let i = 0; i < this.playground.players.length; i ++) {
+            if (this.playground.players[i] === this) {
+                    this.playground.players.splice(i, 1);
+            }
+        }
+    }
 
 }
