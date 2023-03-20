@@ -12,14 +12,14 @@
     /*height: 7vh;  vh is percent of window height*/
     width: 20vw;
     position: relative;
-    top: 40vh;
-    left: 19vw;
+    top: 40%;
+    left: 30%;
 
 }
 
 .ac-game-menu-field-item {
     color: white;
-    height: 7vh;
+    height: 4vh;
     width: 22vh;
     font-size: 3vh;
     font-style: italic;
