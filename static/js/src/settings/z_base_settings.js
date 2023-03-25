@@ -6,6 +6,8 @@ class Settings {
         // check the clinet plateform
         this.platform = "WEB";
         if (this.root.AcWingOS) this.platform = "ACAPP";
+
+        this.start();
     }
 
     start() {
@@ -31,6 +33,7 @@ class Settings {
                 platform: outer.platform
             },
             success: function(resp) {
+                console.log(resp);
                 if (resp.result === "success") {
                     outer.hide();
                     outer.root.menu.show();
