@@ -22,11 +22,11 @@ class AcGameMenu {
     </div>
 </div>
 `);
-
+        this.$menu.hide();
         this.root.$ac_game.append(this.$menu);
-        this.$single = this.$menu.find('.ac-game-menu-field-item-single')
-        this.$multi = this.$menu.find('.ac-game-menu-field-item-multi')
-        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings')
+        this.$single = this.$menu.find('.ac-game-menu-field-item-single');
+        this.$multi = this.$menu.find('.ac-game-menu-field-item-multi');
+        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings');
 
         this.start();
     }

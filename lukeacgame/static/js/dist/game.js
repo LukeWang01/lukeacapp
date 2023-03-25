@@ -22,11 +22,11 @@ class AcGameMenu {
     </div>
 </div>
 `);
-
+        this.$menu.hide();
         this.root.$ac_game.append(this.$menu);
-        this.$single = this.$menu.find('.ac-game-menu-field-item-single')
-        this.$multi = this.$menu.find('.ac-game-menu-field-item-multi')
-        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings')
+        this.$single = this.$menu.find('.ac-game-menu-field-item-single');
+        this.$multi = this.$menu.find('.ac-game-menu-field-item-multi');
+        this.$settings = this.$menu.find('.ac-game-menu-field-item-settings');
 
         this.start();
     }
@@ -538,13 +538,69 @@ class AcGamePlayground {
 
 
 }
+class Settings {
+
+    constructor(root) {
+        this.root = root;
+        
+        // check the clinet plateform
+        this.platform = "WEB";
+        if (this.root.AcWingOS) this.platform = "ACAPP";
+    }
+
+    start() {
+         this.get_info();
+    }
+
+    login() {
+
+    }
+
+
+    register() {
+
+    }
+
+
+    get_info() {
+        let outer = this;
+        $.ajax({
+            url:"https://app5069.acapp.acwing.com.cn/settings/getinfo/",
+            type:"GET",
+            data:{
+                platform: outer.platform
+            },
+            success: function(resp) {
+                if (resp.result === "success") {
+                    outer.hide();
+                    outer.root.menu.show();
+                } else {
+                    outer.login();
+                }
+            }
+        });
+
+    }
+
+    show() {
+
+    }
+    
+    hide() {
+    
+    }
+
+}
 export class AcGame{
 
-    constructor(id) {
+    constructor(id, AcWingOS) {
         this.id = id;
         this.$ac_game = $('#' + id);
+
+        this.settings = new Settings(this);
         this.menu = new AcGameMenu(this);
         this.playground = new AcGamePlayground(this);
+        this.AcWingOS = AcWingOS;
 
         this.start();
 
