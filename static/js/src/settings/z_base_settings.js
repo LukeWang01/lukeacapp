@@ -36,7 +36,7 @@ class Settings {
         </div>
 
         <div class="ac-game-settings-error-message">
-            Log in error: username or password is incorrect!
+            
         </div>
         
         <br>
@@ -87,7 +87,7 @@ class Settings {
         </div>
 
         <div class="ac-game-settings-error-message">
-            Log in error: username or password is incorrect!
+            
         </div>
         
         <br>
@@ -152,6 +152,11 @@ class Settings {
         this.$login_register.click(function() {
             outer.register();
         });
+        
+        this.$login_submit.click(function() {
+            outer.login_on_remote();
+        });
+
     }
 
     add_listening_events_register() {
@@ -160,9 +165,81 @@ class Settings {
             outer.login();
         });
 
+        this.$register_submit.click(function() {
+            outer.register_on_remote();
+        });
+
     }
 
 
+    login_on_remote() {
+        let username = this.$login_username.val();
+        let password = this.$login_password.val();
+        this.$login_error_message.empty();
+        let outer = this;
+
+        $.ajax({
+            url: "https://app5069.acapp.acwing.com.cn/settings/login/",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+            },
+            success: function(resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    location.reload();
+                } else {
+                    outer.$login_error_message.html(resp.result);
+                }
+            }
+        });
+    }
+
+    register_on_remote() {
+        let outer = this;
+        let username = this.$register_username.val();
+        let password =-this.$register_password.val();
+        let password_confirm = this.$register_password_confirm.val();
+        console.log(password, password_confirm);
+
+        this.$register_error_message.empty();
+
+        $.ajax({
+            url: "https://app5069.acapp.acwing.com.cn/settings/register",
+            type: "GET",
+            data: {
+                username: username,
+                password: password,
+                password_confirm: password_confirm,
+            },
+            success: function(resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    location.reload();
+                } else {
+                    outer.$register_error_message.html(resp.result);
+                }
+            },
+        });
+
+    }
+
+    logout_on_remote() {
+        if (this.platform === "ACAPP") return false;
+        console.log("logout remote");
+        $.ajax({
+            url: "https://app5069.acapp.acwing.com.cn/settings/logout/",
+            type: "GET",
+            data: {},
+            success: function(resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    location.reload();
+                }
+            },
+        });
+    }
 
 
     login() {
