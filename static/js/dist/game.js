@@ -760,7 +760,7 @@ class Settings {
     register_on_remote() {
         let outer = this;
         let username = this.$register_username.val();
-        let password =-this.$register_password.val();
+        let password = this.$register_password.val();
         let password_confirm = this.$register_password_confirm.val();
         console.log(password, password_confirm);
 
@@ -777,6 +777,7 @@ class Settings {
             success: function(resp) {
                 console.log(resp);
                 if (resp.result === "success") {
+                    console.log("page reload, register on remote");
                     location.reload();
                 } else {
                     outer.$register_error_message.html(resp.result);
