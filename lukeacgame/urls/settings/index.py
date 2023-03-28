@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from lukeacgame.views.settings.getinfo import getinfo
 from lukeacgame.views.settings.login import signin
 from lukeacgame.views.settings.logout import signout
@@ -10,5 +10,6 @@ urlpatterns = [
     path("login/", signin, name="settings_login"),
     path("logout/", signout, name="settings_logout"),
     path("register/", register, name="settings_register"),
+    path("acwing/", include("lukeacgame.urls.settings.acwing.index")),
 
 ]
