@@ -5,15 +5,27 @@ from django.contrib.auth import login
 from lukeacgame.models.player.player import Player
 import requests
 from random import randint
+from django.http import JsonResponse
 
 
 def receive_code(request):
     data = request.GET
+    
+    if "errcode" in data:
+        return JsonResponse({
+                'result': "apply failed",
+                'errcode': data['errcode'],
+                'errmsg': data['errmsg'],
+            })
+
     code = data.get("code")
     state = data.get("state")
     
+    ## apply from unknow site
     if not cache.has_key(state):
-        return redirect("index")
+        return JsonResponse({
+                'result': "state is incorrect."
+            })
 
     cache.delete(state)
     
@@ -33,8 +45,17 @@ def receive_code(request):
 
     players = Player.objects.filter(openid=openid)
     if players.exists():
-        login(request, players[0].user)
-        return redirect('index')
+        #login(request, players[0].user)
+        player = players[0]
+
+        return JsonResponse({
+                'result': "success",
+                'username': player.user.username,
+                'photo': player.photo,
+
+            })
+
+
 
     get_userinfo_url = "https://www.acwing.com/third_party/api/meta/identity/getinfo/"
     params = {
@@ -56,8 +77,11 @@ def receive_code(request):
     user = User.objects.create(username=username)
     player = Player.objects.create(user=user, photo=user_photo, openid=openid)
 
-    login(request, user)
+    #login(request, user)
 
-    return redirect("index")
-
-
+    
+    return JsonResponse({
+                'result': "success",
+                'username': player.user.username,
+                'photo': player.phot,
+            })

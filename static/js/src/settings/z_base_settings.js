@@ -5,7 +5,9 @@ class Settings {
         
         // check the clinet plateform
         this.platform = "WEB";
-        if (this.root.AcWingOS) this.platform = "ACAPP";
+        if (this.root.AcWingOS) {
+            this.platform = "ACAPP";
+        }
 
         this.username = "";
         this.photo = "";
@@ -138,8 +140,17 @@ class Settings {
     }
 
     start() {
-        this.get_info();
-        this.add_listening_events();
+        console.log("AcWing: ", this.root.AcWingOS);
+        console.log("Platform: ", this.platform);
+        if (this.platform === "ACAPP") {
+            this.get_info_acapp();
+        }else{
+            this.get_info_web();
+            this.add_listening_events();
+        }
+
+        //this.get_info();
+        //this.add_listening_events();
     }
 
     add_listening_events() {
@@ -182,7 +193,7 @@ class Settings {
             url: "https://app5069.acapp.acwing.com.cn/settings/acwing/web/apply_code/",
             type: "GET",
             success: function(resp) {
-                console.log(resp);
+                console.log("call from acwing_login: ", resp);
                 if (resp.result === "success") {
                     window.location.replace(resp.apply_code_url);
                 }
@@ -274,8 +285,37 @@ class Settings {
         this.$register.show();
     }
 
+    acapp_login(appid, redirect_uri, scope, state) {
+        let outer = this;
+        this.root.AcWingOS.api.oauth2.authorize(appid, redirect_uri, scope, state, function(resp){
+            console.log("called from acapp_login: ", resp);
+            if (resp.result === "success") {
+                outer.username = resp.username;
+                outer.photo = resp.photo;
+                outer.hide();
+                outer.root.menu.show();
+            }
 
-    get_info() {
+        });
+
+    }
+
+    get_info_acapp() {
+        let outer = this;
+        $.ajax({
+            url: "https://app5069.acapp.acwing.com.cn/settings/acwing/acapp/apply_code/",
+            type: "GET",
+            success: function(resp){
+                if (resp.result === "success") {
+                    outer.acapp_login(resp.appid, resp.redirect_uri, resp.scope, resp.state);
+                }
+            }
+
+        });
+    }
+
+
+    get_info_web() {
         let outer = this;
         $.ajax({
             url:"https://app5069.acapp.acwing.com.cn/settings/getinfo/",

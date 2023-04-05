@@ -8,7 +8,10 @@ from lukeacgame.views.settings.acwing.acapp.receive_code import receive_code as 
 urlpatterns= [
             path("web/apply_code/", web_apply_code, name="settings_acwing__web_apply_code"),
             path("web/receive_code/", web_receive_code, name="settings_acwing_web_receive_code"),
-            
+
             path("acapp/receive_code/", acapp_receive_code, name="settings_acwing_acapp_receive_code"),
             path("acapp/apply_code/", acapp_apply_code, name="settings_acwing__acapp_apply_code"),
+
+
     ]
+
