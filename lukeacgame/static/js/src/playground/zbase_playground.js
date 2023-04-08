@@ -8,6 +8,9 @@ class AcGamePlayground {
 
         this.hide();
 
+        
+        this.root.$ac_game.append(this.$playground);
+
         this.start();
     }
 
@@ -15,10 +18,19 @@ class AcGamePlayground {
 
     }
 
+    resize() {
+        this.width = this.$playground.width();
+        this.height = this.$playground.height();
+        
+
+    }
+
+
     show() {    // open playground
         this.$playground.show();
         
-        this.root.$ac_game.append(this.$playground);
+        //this.root.$ac_game.append(this.$playground);
+        
         this.width = this.$playground.width();
         this.height = this.$playground.height();
         this.game_map = new GameMap(this);
